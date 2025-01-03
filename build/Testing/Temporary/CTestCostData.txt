@@ -1,0 +1,8 @@
+F4_Test.Constructor_Rejections 1 0.880324
+F4_Test.Has_Four_Elements 1 0.0639139
+F4_Test.Is_Field 1 0.112575
+F4_Test.Operators_Concordance 1 0.0598433
+PolTest.Constructor 1 0.082725
+PolTest.Addition 1 0.043913
+PolTest.Are_Groups 1 0.299621
+---
