@@ -1,2 +1,2 @@
 # btc_horcrux
-Add a protection layer to your bitcoin seed phrase using secret sharing
+Safely divide your Bitcoin seed phrase into several horcruxes.
