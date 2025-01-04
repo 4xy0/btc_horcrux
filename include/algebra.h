@@ -208,7 +208,7 @@ public:
     constexpr Pol& operator++()
     {
         bool carry {true};
-        for (deg_t i {}; carry && i < d; ++i)
+        for (deg_t i {}; carry && i <= d; ++i)
             carry = ++coeffs_[i] == k{};
         return *this;
     }

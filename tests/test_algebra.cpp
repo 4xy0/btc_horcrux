@@ -213,8 +213,27 @@ constexpr group_size_t pow(group_size_t N, deg_t d)
     }
 }
 
+TEST(PolTest, Power_Function)
+{
+    EXPECT_EQ(pow(static_cast<group_size_t>(6),
+                  static_cast<deg_t>(5)),
+              static_cast<group_size_t>(6*6*6*6*6));
+
+    EXPECT_EQ(pow(static_cast<group_size_t>(6),
+                  static_cast<deg_t>(0)),
+              static_cast<group_size_t>(1));
+              
+    EXPECT_EQ(pow(static_cast<group_size_t>(0),
+                  static_cast<deg_t>(5)),
+              static_cast<group_size_t>(0));
+
+    EXPECT_EQ(pow(static_cast<group_size_t>(0),
+                  static_cast<deg_t>(0)),
+              static_cast<group_size_t>(1));
+}
+
 template <typename k, group_size_t N, deg_t d>
-constexpr auto generate_Pol_elts()
+constexpr auto generate_pol_elts()
 {
     constexpr auto nb_pol {pow(N, d+1)};
     std::array<Pol<k, d>, nb_pol> pol_elts {};
@@ -227,23 +246,54 @@ constexpr auto generate_Pol_elts()
 
 template <typename k, group_size_t N, deg_t d>
 static constexpr std::array<Pol<k, d>, pow(N,d+1)>
-    Pol_elts {generate_Pol_elts<k, N, d>()};
+    Pol_elts {generate_pol_elts<k, N, d>()};
 
 // TODO: write tests on Pol_elts
+
+template <typename k, group_size_t N, deg_t d>
+void pol_elts_correctly_generated()
+{
+    EXPECT_EQ((Pol_elts<k, N, d>.size()), pow(N,d+1));
+    for (group_size_t i {}; i < Pol_elts<k, N, d>.size(); ++i)
+        for (group_size_t j {}; j < i; ++j)
+            EXPECT_NE((Pol_elts<k, N, d>[i]),
+                      (Pol_elts<k, N, d>[j]));
+}
+
+template <typename k, group_size_t N, deg_t... Is>
+void pol_elts_all_correctly_generated(
+    std::integer_sequence<deg_t, Is...>)
+{
+    (pol_elts_correctly_generated<k, N, Is>(), ...);
+}
+
+TEST(PolTest, Pol_Elts_Correctly_Generated)
+{
+    pol_elts_all_correctly_generated<𝔽₄, 4>(
+        std::make_integer_sequence<deg_t,
+        cst::max_degree_tested+1>{}
+    );
+}
+
+// TEST(Has_Two_Pow_N_Elements)
+// {
+
+// }
+
 
 // TODO: rewrite the two following tests
 
 TEST(PolTest, Constructor)
 {
-    Pol<𝔽₄, 2> p{{𝔽₄{1}, α, α+1}};
+    Pol<𝔽₄, 2> p {{𝔽₄{1}, α, α+1}};
     EXPECT_EQ(p.deg(), 2);
 }
 
 TEST(PolTest, Addition)
 {
-    Pol<𝔽₄, 1> p1({𝔽₄{1}, α});
-    Pol<𝔽₄, 1> p2({𝔽₄{0}, 𝔽₄{1}});
-    Pol<𝔽₄, 1> expected({𝔽₄{1}, α+1});
+    Pol<𝔽₄, 1> p1 {{𝔽₄{1}, α}};
+    Pol<𝔽₄, 1> p2 {{𝔽₄{0}, 𝔽₄{1}}};
+    Pol<𝔽₄, 1> expected {{𝔽₄{1}, α+1}};
     EXPECT_EQ(p1 + p2, expected);
 }
 

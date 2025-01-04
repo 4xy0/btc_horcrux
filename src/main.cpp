@@ -4,7 +4,6 @@
 int main()
 {
     // TODO: add these tests in test_algebra
-    std::cout << 𝔽₄{1}/α << '\n';
     Pol<𝔽₄, 2> y {{1}};
     std::cout << "y: " << y << '\n';
     std::cout << Pol<𝔽₄, 2>{{α}} + 𝑥<𝔽₄,2> + 𝑥<𝔽₄,2>*𝑥<𝔽₄,2> << '\n';
