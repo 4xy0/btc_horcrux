@@ -191,7 +191,12 @@ TEST(F4_Test, Operators_Concordance)
         (𝔽₄_elts, 𝔽₄{0});
 }
 
-// TODO: write tests for division by 0
+
+TEST(F4_Test, Division_By_Zero)
+{
+    for (const auto& elt : 𝔽₄_elts)
+        EXPECT_REJECTION(elt/𝔽₄{0}, std::invalid_argument);
+}
 
 
 

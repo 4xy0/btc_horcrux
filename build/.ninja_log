@@ -1,0 +1,19 @@
+# ninja log v6
+55	103	7576423075391266	clean	186d2f0e95cae768
+27	5738	7576423100686755	_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj	4a568764ea19c47f
+39	17601	7576423100872888	CMakeFiles/test_algebra.dir/tests/test_algebra.cpp.obj	12efca09199d2036
+43434	44209	7576423534733912	test_algebra.exe	941c848a73a07272
+18	41702	7576423100575930	_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	a2c86e90b97e811c
+41706	43153	7576423517455052	lib/libgtest.a	db04bd42badc906f
+43154	43434	7576423531943399	lib/libgtest_main.a	b32052535e6075e9
+34	2930	7576423606392016	CMakeFiles/main_project.dir/src/main.cpp.obj	6c337e9cd28d8859
+2933	3167	7576423635394687	main_project.exe	38ba2751aa4555aa
+169	218	7577176163327890	clean	186d2f0e95cae768
+29	23333	7577176185062307	_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj	4a568764ea19c47f
+33	28172	7577176185062307	CMakeFiles/test_algebra.dir/tests/test_algebra.cpp.obj	12efca09199d2036
+21	46944	7577176184891680	_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	a2c86e90b97e811c
+46946	49067	7577176654275560	lib/libgtest.a	db04bd42badc906f
+49067	49233	7577176675435831	lib/libgtest_main.a	b32052535e6075e9
+49233	51305	7577176677102487	test_algebra.exe	941c848a73a07272
+52	4100	7577176764974103	CMakeFiles/main_project.dir/src/main.cpp.obj	6c337e9cd28d8859
+4101	4341	7577176805414409	main_project.exe	38ba2751aa4555aa
