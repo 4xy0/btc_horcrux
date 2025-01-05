@@ -248,8 +248,6 @@ template <typename k, group_size_t N, deg_t d>
 static constexpr std::array<Pol<k, d>, pow(N,d+1)>
     Pol_elts {generate_pol_elts<k, N, d>()};
 
-// TODO: write tests on Pol_elts
-
 template <typename k, group_size_t N, deg_t d>
 void pol_elts_correctly_generated()
 {
@@ -275,10 +273,64 @@ TEST(PolTest, Pol_Elts_Correctly_Generated)
     );
 }
 
-// TEST(Has_Two_Pow_N_Elements)
-// {
 
-// }
+// Similarily, generating all arrays
+
+// TODO: build polynomial generation on array gen
+// to respect DRY principle
+
+// TODO: cut test_algebra.cpp in several files
+// and put array/pol gen in a source file
+
+template <typename k, group_size_t N, deg_t d>
+constexpr auto next_arr(std::array<k, d+1>& current_arr)
+{
+    bool carry {true};
+    for (deg_t i {}; carry && i <= d; ++i)
+        carry = ++current_arr[i] == k{};
+    return current_arr;
+}
+
+template <typename k, group_size_t N, deg_t d>
+constexpr auto generate_arrays()
+{
+    constexpr auto nb_arr {pow(N, d+1)};
+    std::array<std::array<k, d+1>, nb_arr> arrays {};
+    std::array<k, d+1> current_arr {};
+
+    for (group_size_t i {0}; i < nb_arr; ++i)
+        arrays[i] = next_arr<k, N, d>(current_arr);
+    return arrays;
+}
+
+template <typename k, group_size_t N, deg_t d>
+static constexpr std::array<std::array<k, d+1>, pow(N,d+1)>
+    Arrays {generate_arrays<k, N, d>()};
+
+template <typename k, group_size_t N, deg_t d>
+void arrays_correctly_generated()
+{
+    EXPECT_EQ((Arrays<k, N, d>.size()), pow(N,d+1));
+    for (group_size_t i {}; i < Arrays<k, N, d>.size(); ++i)
+        for (group_size_t j {}; j < i; ++j)
+            EXPECT_NE((Arrays<k, N, d>[i]),
+                      (Arrays<k, N, d>[j]));
+}
+
+template <typename k, group_size_t N, deg_t... Is>
+void arrays_all_correctly_generated(
+    std::integer_sequence<deg_t, Is...>)
+{
+    (arrays_correctly_generated<k, N, Is>(), ...);
+}
+
+TEST(PolTest, Arrays_Correctly_Generated)
+{
+    arrays_all_correctly_generated<𝔽₄, 4>(
+        std::make_integer_sequence<deg_t,
+        cst::max_degree_tested+1>{}
+    );
+}
 
 
 // TODO: rewrite the two following tests
@@ -324,6 +376,26 @@ TEST(PolTest, Are_Groups)
 
 // TODO: write tests for multiplication,
 // polynomial eval, lagrange, ...
+
+TEST(PolTest, Eval_And_Lagrange)
+{
+    EXPECT_EQ((lagrange<𝔽₄, 1>(std::array<𝔽₄, 2>{{1, α}},
+                               std::array<𝔽₄, 2>{{1, α}})),
+              (𝑥<𝔽₄, 1>));
+    EXPECT_EQ((lagrange<𝔽₄, 1>(std::array<𝔽₄, 2>{{1, α}},
+                               std::array<𝔽₄, 2>{{α, 1}}))(1),
+              α);
+}
+
+
+
+// template <typename k, group_size_t N, deg_t d>
+// void lagrange_and_eval_reciprocity()
+// {
+//     for (const auto& pol : Pol_elts<k, N, d>)
+//         for (const auto& )
+//         EXPECT_EQ()
+// }
 
 
 
